@@ -3,11 +3,16 @@ import React, { useState } from 'react';
 import Pitch from './Pitch';
 import ResultScreen from './ResultScreen';
 import { callMeMaybe, perc } from './SongPitches'; 
+import FilePitch from './FilePitch';
 
 function App() {
   const [shouldUpdate, setShouldUpdate] = useState(1);
   const [detectedNotes, setDetectedNotes] = useState([]);
   const [stop, setStop] = useState(false);
+  var previousValueToDisplay = 0;
+  var smoothingCount = 0;
+  var smoothingThreshold = 20;
+  var smoothingCountThreshold = 5;
 
   const startAudio = () => {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -38,6 +43,10 @@ function App() {
     }
   };
 
+  function noteIsSimilarEnough(note) {
+      return Math.abs(note - previousValueToDisplay) < smoothingThreshold;
+  }
+
   const visualize = (audioContext, analyser) => {
     if (shouldUpdate === 1) {
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
@@ -55,7 +64,17 @@ function App() {
       // const closestNote = noteStrings[frequencyToNote(maxFrequency) % 12] || 'no sound';
       const closestNote = maxFrequency || -1;
       // const closestNote = noteStrings[frequencyToNote(autoCorrelateValue) % 12] || 'no sound';
-
+      if (noteIsSimilarEnough(closestNote)) {
+        if (smoothingCount < smoothingCountThreshold) {
+          smoothingCount++;
+        } else {
+          previousValueToDisplay = closestNote;
+          smoothingCount = 0;
+        }
+      } else {
+        previousValueToDisplay = closestNote;
+        smoothingCount = 0;
+      }
       updateDetectedNotes(closestNote);
 
       setTimeout(() => {
@@ -142,6 +161,7 @@ function App() {
         )}
       </header>
       <Pitch visualize={visualize} />
+      <FilePitch/>
     </div>
   );
 }

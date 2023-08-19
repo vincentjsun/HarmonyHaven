@@ -1,22 +1,58 @@
 import React from 'react';
 
 const ResultScreen = ({ user, orig, perc }) => {
-  const matchingIndexes = user.filter((item, index) => {
-    for (let i = -3; i <= 3; i++) {
+  perc.push(user);
+  let list = perc[0];
+
+  function removeLeadingMinusOnes(list) {
+    let index = 0;
+    while (index < list.length && list[index] === -1) {
+      index++;
+    }
+    return list.slice(index);
+  }
+
+  function calculateAverages(list, chunkSize) {
+    const filteredList = list.filter(value => value <= 1000); // Filter out values above 3000
+    const averagedArray = [];
+    
+    for (let i = 0; i < filteredList.length; i += chunkSize) {
+      const chunk = filteredList.slice(i, i + chunkSize);
+      const average = chunk.reduce((sum, value) => sum + value, 0) / chunkSize;
+      averagedArray.push(average);
+    }
+    
+    return averagedArray;
+  }
+  
+  const chunkSize = 10;
+  
+  list = removeLeadingMinusOnes(list);
+  var notes = calculateAverages(list, chunkSize);
+  orig = removeLeadingMinusOnes(orig);
+  orig = calculateAverages(orig, chunkSize);
+  console.log(notes);
+  console.log(orig);
+  
+  const matchingIndexes = notes.filter((item, index) => {
+    for (let i = -2; i <= 2; i++) {
       if (index + i >= 0 && index + i < orig.length) {
         const diff = Math.abs(item - orig[index + i]);
-        if (diff <= 100) {
+        const doubleNote = item * 2, quadNote = item * 4;  
+        const doubleOrig = orig[index + i] * 2, quadOrig = orig[index + i] * 4;
+        // console.log(item + " : " + orig[index + i] + " ??? " + Math.abs(doubleNote - orig[index + i]) + " ?? " + Math.abs(doubleOrig - item))
+        if (diff <= 50 || Math.abs(doubleNote - orig[index + i]) <= 50 || Math.abs(doubleOrig - item) <= 50 || Math.abs(quadNote - orig[index + i]) <= 50 || Math.abs(quadOrig - item) <= 50) {
           return true; 
         }
       }
     }
     return false; 
-  }).length;
+  }).length;  
 
-  console.log(matchingIndexes);
 
-  perc.push(matchingIndexes/user.length*100);
-  const percent = perc[0];
+  // perc.push(matchingIndexes/notes.length*100);
+  // perc.push(matchingIndexes);
+  const percent = matchingIndexes/notes.length*100;
   console.log(percent);
   
   var result;
