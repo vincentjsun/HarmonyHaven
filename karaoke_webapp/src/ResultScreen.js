@@ -31,8 +31,8 @@ const ResultScreen = ({ user, orig, perc }) => {
   var notes = calculateAverages(list, chunkSize);
   orig = removeLeadingMinusOnes(orig);
   orig = calculateAverages(orig, chunkSize);
-  console.log(notes);
-  console.log(orig);
+  //console.log(notes);
+  //console.log(orig);
   
   const matchingIndexes = notes.filter((item, index) => {
     for (let i = -2; i <= 2; i++) {
@@ -53,7 +53,7 @@ const ResultScreen = ({ user, orig, perc }) => {
   // perc.push(matchingIndexes/notes.length*100);
   // perc.push(matchingIndexes);
   const percent = matchingIndexes/notes.length*100;
-  console.log(percent);
+  //console.log(percent);
   
   var result;
 
