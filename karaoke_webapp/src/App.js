@@ -8,6 +8,9 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 let stop = false;
+// import FilePitch from './FilePitch';
+// import SpeechToTextComponent from './SpeechToText';
+
 function App() {
   const [shouldUpdate, setShouldUpdate] = useState(1);
   const [detectedNotes, setDetectedNotes] = useState([]);
@@ -84,7 +87,7 @@ function App() {
 
       setTimeout(() => {
         requestAnimationFrame(() => visualize(audioContext, analyser));
-      }, 100);
+      }, 200);
     }
   };
 
@@ -168,6 +171,8 @@ function App() {
         )}
       </header>
       <Pitch visualize={visualize} />
+      {/* <SpeechToTextComponent></SpeechToTextComponent> */}
+      {/* <FilePitch/> */}
       <div style={
         {
           width: '600px',
