@@ -33,12 +33,12 @@ class Pitch extends Component {
   startAudio = () => {
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.analyser = this.audioContext.createAnalyser();
-    this.analyser.minDecibels = -55;
+    this.analyser.minDecibels = -65;
     this.analyser.maxDecibels = -10;
     this.analyser.smoothingTimeConstant = 0.85;
 
     if (!navigator?.mediaDevices?.getUserMedia) {
-      alert('Sorry, getUserMedia is required for the app.');
+      alert('getUserMedia is required for the app.');
     } else {
       const constraints = { audio: true };
       navigator.mediaDevices.getUserMedia(constraints)
@@ -48,7 +48,7 @@ class Pitch extends Component {
           this.visualize();
         })
         .catch(err => {
-          alert('Sorry, microphone permissions are required for the app. You can continue reading without audio.');
+          alert('Microphone permissions are required for the app.');
         });
     }
   };
@@ -62,33 +62,6 @@ class Pitch extends Component {
       });
     }
   };
-
-//   visualize = () => {
-//     if (!this.props.shouldUpdate) {
-//       return;
-//     }
-
-//     const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-//     this.analyser.getByteFrequencyData(dataArray);
-
-//     const maxFrequencyIndex = dataArray.indexOf(Math.max(...dataArray));
-//     const maxFrequency = maxFrequencyIndex * this.audioContext.sampleRate / this.analyser.fftSize;
-
-//     // const noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-//     // const closestNote = noteStrings[this.frequencyToNote(maxFrequency) % 12] || 'no sound';
-//     const closestNote = maxFrequency || 'no sound';
-
-//     this.setState(prevState => ({
-//       detectedNotes: [...prevState.detectedNotes, closestNote]
-//     }));
-
-//     requestAnimationFrame(this.visualize);
-//   };
-
-// //  frequencyToNote = frequency => {
-// //     const noteNum = 12 * (Math.log(frequency / 440) / Math.log(2));
-// //     return Math.round(noteNum) + 69;
-// //   }; 
 
   render() {
     return (
