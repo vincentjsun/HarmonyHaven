@@ -71,6 +71,10 @@ function App() {
       // const closestNote = noteStrings[frequencyToNote(maxFrequency) % 12] || 'no sound';
       //const closestNote = maxFrequency || -1;
       // const closestNote = noteStrings[frequencyToNote(autoCorrelateValue) % 12] || 'no sound';
+
+      if (Math.abs(closestNote - previousValueToDisplay) > 500) {
+        closestNote = previousValueToDisplay;
+      }
       if (noteIsSimilarEnough(closestNote)) {
         if (smoothingCount < smoothingCountThreshold) {
           smoothingCount++;
