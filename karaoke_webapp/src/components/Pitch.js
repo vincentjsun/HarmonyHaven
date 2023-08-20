@@ -19,10 +19,10 @@ ChartJS.register(
 )
 
 let stop = false;
+let notes = [];
 function Pitch() {
     const [shouldUpdate, setShouldUpdate] = useState(1);
   const [detectedNotes, setDetectedNotes] = useState([]);
-  //const [stop, setStop] = useState(false);
   var previousValueToDisplay = 0;
   var smoothingCount = 0;
   var smoothingThreshold = 20;
@@ -56,6 +56,7 @@ function Pitch() {
       newDetectedNote = Math.round(newDetectedNote);
       console.log(stop);
       setDetectedNotes(prevNotes => [...prevNotes, newDetectedNote]);
+      notes.push(newDetectedNote);
     }
   };
 
@@ -211,11 +212,9 @@ function Pitch() {
 
   return (
     <div className="pitch">
+        <ResultScreen user={notes} orig={callMeMaybe} perc={perc}/>
         <button id="startButton" onClick={startAudio}>Start Audio</button>
         <button id="stopButton" onClick={stopUpdate}>Stop Audio</button>
-        {shouldUpdate === 0 && (
-          <ResultScreen user={detectedNotes} orig={callMeMaybe} perc={perc}/>
-        )}
         <div style={
         {
           width: '600px',
