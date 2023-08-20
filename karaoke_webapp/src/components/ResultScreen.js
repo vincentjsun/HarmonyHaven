@@ -1,4 +1,5 @@
 import React from 'react';
+import '../pages/App.css';
 
 let score = 0;
 let combo = 0;
@@ -114,7 +115,7 @@ const ResultScreen = ({ user, orig, perc }) => {
       <h2>Percent: {isNaN(percent) ? "0%" : percent.toString().substring(0,5) + "%"} </h2>
       {/* <h2>Rank: {result.substring(2,3) === 'S' ? result.substring(1,3) : result.substring(1,2)} </h2> */}
       {score > 0 && (
-        <img src={result} alt={result.substring(1,2)}></img>
+        <img className='rank' src={result} alt={result.substring(1,2)}></img>
       )}
     </div>
   );
