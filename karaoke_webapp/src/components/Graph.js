@@ -17,8 +17,8 @@ ChartJS.register(
 )
 function Graph(props) {
     const [time, setTime] = useState(new Date());
-    const minval = Math.max(Math.min(...props.message[0]) - 20, 0);
-    const maxval = Math.max(...props.message[0]) + 20;
+    const minval = 50;
+    const maxval = 550;
     const original = props.message[0];
     const cover = props.message[1];
     const snipindex = Math.max(cover.length-20,0);
