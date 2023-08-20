@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { setAccess, setId } from "../Title";
 
 function Signup() {
     const history=useNavigate();
@@ -16,6 +17,8 @@ function Signup() {
                     alert("User already exists")
                 }
                 else if(res.data=="not exist"){
+                    setAccess();
+                    setId(email);
                     //go to homepage
                     history("/home", {state:{id:email}});
                 }

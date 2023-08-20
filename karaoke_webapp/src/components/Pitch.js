@@ -10,6 +10,7 @@ import {
     PointElement,
     Legend
 } from 'chart.js';
+import { cancel, start } from '../Title';
 ChartJS.register(
   LineElement,
   CategoryScale,
@@ -21,14 +22,26 @@ ChartJS.register(
 let stop = false;
 let notes = [];
 function Pitch() {
-    const [shouldUpdate, setShouldUpdate] = useState(1);
-  const [detectedNotes, setDetectedNotes] = useState([]);
+  const [shouldUpdate, setShouldUpdate] = useState(1);
+  const [detectedNotes, setDetectedNotes] = useState([]); 
   var previousValueToDisplay = 0;
   var smoothingCount = 0;
   var smoothingThreshold = 20;
   var smoothingCountThreshold = 5;
 
+  useEffect(() => {
+    console.log("STARTING");
+    startAudio();
+  }, [start]);
+
+  useEffect(() => {
+    console.log(",,,stop");
+    stopUpdate();
+  }, [cancel]);
+
   const startAudio = () => {
+    console.log(start);
+    console.log("//");
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
     analyser.minDecibels = -65;
@@ -221,7 +234,7 @@ function Pitch() {
           height: '300px'
         }
       }>
-        <Line 
+        <Line className='graph'
         data = {data}
         options = {options}>
 

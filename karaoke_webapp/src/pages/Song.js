@@ -1,6 +1,6 @@
 import './App.css';
 import aud from '../assets/audio.mp3';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import a_rank from '../assets/a_rank.png';
 import b_rank from '../assets/b_rank.png';
@@ -10,13 +10,15 @@ import s_rank from '../assets/s_rank.png';
 // import { lyrics } from './assets/TestLyrics';
 import ReactAudioPlayer from 'react-audio-player';
 import { useNavigate } from 'react-router-dom';
-import { image, title } from '../Title';
+import { cancelA, image, startA, title } from '../Title';
 import { getLyrics } from '../ParseLyrics';
 import data from '../assets/lyrics.vtt';
 import data2 from '../assets/lyrics2.txt';
 import ProgressBar from './ProgressBar';
+import Graph from '../components/Graph';
+import Pitch from '../components/Pitch';
 
-function Test() {
+function Song() {
   const [acc, setAcc] = useState(-1);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -48,11 +50,11 @@ function Test() {
         
         const replaced = txt.replace(/"/g, "'");
 
-        console.log(replaced);
+        // console.log(replaced);
 
         const lines = replaced.split("},");
 
-        console.log(lines);
+        // console.log(lines);
         const parsedLines = lines.map(line => {
             const trimmedLine = line.trim();
             // console.log(trimmedLine);
@@ -66,7 +68,7 @@ function Test() {
             return null; 
           }).filter(line => line !== null);
 
-        console.log(parsedLines);
+        // console.log(parsedLines);
         setLyrics(parsedLines);
       } catch (error) {
         console.error('error ', error);
@@ -105,23 +107,6 @@ function Test() {
     lyrics.push({words: "....", start: lyrics[lyrics.length-1], time: lyrics[lyrics.length-1].time + 10})
   }
 
-  const renderGrade = React.useCallback(() => {
-    switch(true) {
-      case acc < 0:
-        return null;
-      case acc < 25: 
-        return <img src={d_rank} className='rank'/>
-      case acc < 50: 
-        return <img src={c_rank} className='rank'/>
-      case acc < 75:
-        return <img src={b_rank} className='rank'/>
-      case acc < 90:
-        return <img src={a_rank} className='rank'/>
-      default: 
-        return <img src={s_rank} className='srank'/>;
-    }
-  }, [acc]);
-
   useEffect(() => {
     // if(index < lyrics.length - 1) {
     //   if(lyrics[index].end !== lyrics[index+1].start) {
@@ -148,11 +133,13 @@ function Test() {
   const renderLyrics = () => {
     setIndex(0);
     setPlaying(true);
+    startA();
     startup();
   }
 
   const cancelPlay = () => {
     setIndex(0);
+    cancelA();
     setPlaying(false);
   }
 
@@ -180,7 +167,7 @@ function Test() {
           ) : <button onClick={renderLyrics} className='button2'>start</button>}
           <button className='return' onClick={checkout}>Back to Search</button>
           <div>
-            {renderGrade()}
+            <Pitch/>
           </div>
         </div>
       </div>
@@ -188,4 +175,4 @@ function Test() {
     );
   }
   
-  export default Test;
+  export default Song;

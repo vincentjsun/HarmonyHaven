@@ -14,7 +14,7 @@ function Home() {
       <h1 className='tagline'>website tagline</h1>
       <h3 className='text'>Get started now or learn more:</h3>
       <button className='navbutton' onClick={checkout}>Try Karaoke</button>
-      <h3 className='text3'>Example:</h3>
+      <h3 className='text3'>Preview:</h3>
       <img className='screen' src={screenshot}/>
     </div>
     )

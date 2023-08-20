@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { setAccess, setId } from "../Title";
 import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
@@ -13,6 +14,8 @@ function Login() {
                 email,password
             }).then(res=>{
                 if(res.data=="exist"){
+                    setAccess();
+                    setId(email);
                     //go to homepage
                     history("/home", {state:{id:email}});
                 }
