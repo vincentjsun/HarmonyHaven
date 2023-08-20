@@ -14,8 +14,7 @@ function Login() {
             }).then(res=>{
                 if(res.data=="exist"){
                     //go to homepage
-                    //history("/", state:{id:email})
-                    console.log("hi");
+                    history("/", {state:{id:email}});
                 }
                 else if(res.data=="not exist"){
                     alert("User has not signed up");

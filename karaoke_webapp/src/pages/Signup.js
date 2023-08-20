@@ -17,8 +17,7 @@ function Signup() {
                 }
                 else if(res.data=="not exist"){
                     //go to homepage
-                    //history("/", state:{id:email})
-                    console.log("hi");
+                    history("/home", {state:{id:email}});
                 }
             }).catch(err=>{
                 alert("Wrong Details");
