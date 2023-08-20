@@ -1,5 +1,8 @@
 import React from 'react';
 
+let score = 0;
+let combo = 0;
+let index_count = 0;
 const ResultScreen = ({ user, orig, perc }) => {
   perc.push(user);
   let list = perc[0];
@@ -31,9 +34,24 @@ const ResultScreen = ({ user, orig, perc }) => {
   var notes = calculateAverages(list, chunkSize);
   orig = removeLeadingMinusOnes(orig);
   orig = calculateAverages(orig, chunkSize);
-  //console.log(notes);
-  //console.log(orig);
-  console.log(notes.length);
+  function addScore(percent, score, combo) {
+    if (percent <= 50) {
+        score += 5 * (1+(0.3*combo));
+    } else if (percent <= 60 && percent > 50) {
+        score += 10 * (1+(0.4*combo));
+    } else if (percent <= 70 && percent > 60) {
+        score += 30 * (1+(0.5*combo));
+    } else if (percent <= 80 && percent > 70) {
+        score += 50 * (1+(0.5*combo));
+    } else if (percent <= 90 && percent > 80) {
+        score += 100 * (1+(0.5*combo));
+    } else {
+        score += 200 * (1+(0.5*combo));
+    }
+    return score;
+  }
+ let count = 0;
+ let tick = 0;
   const matchingIndexes = notes.filter((item, index) => {
     console.log(index);
     for (let i = -2; i <= 2; i++) {
@@ -43,8 +61,23 @@ const ResultScreen = ({ user, orig, perc }) => {
         const doubleOrig = orig[index + i] * 2, quadOrig = orig[index + i] * 4;
         // console.log(item + " : " + orig[index + i] + " ??? " + Math.abs(doubleNote - orig[index + i]) + " ?? " + Math.abs(doubleOrig - item))
         if (diff <= 15 || Math.abs(doubleNote - orig[index + i]) <= 15 || Math.abs(doubleOrig - item) <= 15 || Math.abs(quadNote - orig[index + i]) <= 15 || Math.abs(quadOrig - item) <= 15) {
-          //console.log(index);
+          count++;
+          combo++;
+          if (count > index_count) {
+            index_count = count;
+            var percentage = count/notes.length*100;
+            score = addScore(percentage, score, combo); 
+          }
           return true; 
+        }
+        else {
+          if (tick > 2) {
+            combo = 0;
+            tick = 0;
+          }
+          else {
+            tick++;
+          }
         }
       }
     }
@@ -52,10 +85,7 @@ const ResultScreen = ({ user, orig, perc }) => {
   }).length;  
 
 
-  // perc.push(matchingIndexes/notes.length*100);
-  // perc.push(matchingIndexes);
   const percent = matchingIndexes/notes.length*100;
-  //console.log(percent);
   
   var result;
 
@@ -80,10 +110,13 @@ const ResultScreen = ({ user, orig, perc }) => {
 
   return (
     <div>
-      <h2>Rank: {result.substring(2,3) === 'S' ? result.substring(1,3) : result.substring(1,2)} </h2>
-      <img src={result} alt={result.substring(1,2)}></img>
-      <p>Number of Matching Frequencies: {matchingIndexes}</p>
-
+      <h2>Combo: {combo} </h2>
+      <h2>Score: {score} </h2>
+      <h2>Percent: {isNaN(percent) ? "0%" : percent.toString().substring(0,5) + "%"} </h2>
+      {/* <h2>Rank: {result.substring(2,3) === 'S' ? result.substring(1,3) : result.substring(1,2)} </h2> */}
+      {score > 0 && (
+        <img src={result} alt={result.substring(1,2)}></img>
+      )}
     </div>
   );
 };
