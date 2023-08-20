@@ -95,7 +95,6 @@ function Pitch() {
         previousValueToDisplay = closestNote;
         smoothingCount = 0;
       }
-      //console.log(detectedNotes);
       updateDetectedNotes(closestNote);
 
       setTimeout(() => {
@@ -156,7 +155,7 @@ function Pitch() {
     stop = true;
     //setStop(true);
   }
-
+  console.log(detectedNotes);
 
   const [time, setTime] = useState(new Date());
     const minval = 50;
@@ -166,8 +165,9 @@ function Pitch() {
     const snipindex = Math.max(cover.length-20,0);
     const coversnippet = cover.slice(snipindex);
     const originalsnippet = original.slice(snipindex, Math.min(snipindex+70, original.length));
+    const origlen = original.slice(Math.min(snipindex, original.length-70), Math.min(snipindex+70, original.length))
     const data = {
-      labels: callMeMaybe,
+      labels: origlen,
       datasets: [{
         label:'Original Pitch',
         data: originalsnippet,
