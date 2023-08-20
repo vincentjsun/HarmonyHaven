@@ -16,94 +16,60 @@ import data from '../assets/lyrics.vtt';
 import data2 from '../assets/lyrics2.txt';
 import ProgressBar from './ProgressBar';
 
-function Test() {
+function Test2() {
   const [acc, setAcc] = useState(-1);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [lyrics, setLyrics] = useState([]);
   const [dur, setDur] = useState(0);
 
-//   useEffect(() => {
-//     const fetchFile = async () => {
-//       try {
-//         const response = await fetch(data);
-//         const vtt = await response.text();
-//         console.log(vtt);
-//         const parsedLyrics = getLyrics(vtt);
-//         setLyrics(parsedLyrics);
-//       } catch (error) {
-//         console.error('error ', error);
-//       }
-//     };
-
-//     fetchFile();
-//   }, []);
-
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const response = await fetch(data2);
-        const txt = await response.text();
-        // console.log(txt);
-        
-        const replaced = txt.replace(/"/g, "'");
-
-        console.log(replaced);
-
-        const lines = replaced.split("},");
-
-        console.log(lines);
-        const parsedLines = lines.map(line => {
-            const trimmedLine = line.trim(); // Trim leading and trailing whitespace
-            // console.log(trimmedLine);
-            const match = trimmedLine.match(/'timeTag': '([^']*)', 'words': (.*)/);
-            if (match) {
-              return {
-                time: toSeconds(match[1]),
-                words: handleWords(match[2]),
-              };
-            }
-            return null; // Return null for lines that don't match the pattern
-          }).filter(line => line !== null);
-
-        console.log(parsedLines);
-        setLyrics(parsedLines);
+        const response = await fetch(data);
+        const vtt = await response.text();
+        console.log(vtt);
+        const parsedLyrics = getLyrics(vtt);
+        setLyrics(parsedLyrics);
       } catch (error) {
         console.error('error ', error);
       }
     };
-  
+
     fetchFile();
   }, []);
 
-  const toSeconds = timeTag => {
-    const [minutes, secondsMs] = timeTag.split(':');
-    const [seconds, milliseconds] = secondsMs.split('.');
-    return parseInt(minutes) * 60 + parseInt(seconds) + parseFloat(`0.${milliseconds}`);
-  };
+  // useEffect(() => {
+  //   const fetchFile = async () => {
+  //     try {
+  //       const response = await fetch(data2);
+  //       const txt = await response.text();
+  //       console.log(txt);
+        
 
-  const handleWords = (word) => {
-    const slice = word.slice(1, -1);
-    if(slice.length < 1) {
-        return "...";
-    } else {
-        return slice;
-    }
-  }
-
-//   const startup = () => {
-//     if(lyrics[0].start !== 0) {
-//       lyrics.unshift({line: "(lyrics will appear here, get ready...)", start: 0, end: lyrics[0].start});
-//     }
-//     lyrics.push({line: "....", start: lyrics[lyrics.length-1].end, end: 10})
-//   }
+  //       console.log(resultArray);
+  //       // setLyrics(lyrics2);
+  //     } catch (error) {
+  //       console.error('error ', error);
+  //     }
+  //   };
+  
+  //   fetchFile();
+  // }, []);
 
   const startup = () => {
-    if(lyrics[0].time !== 0) {
-      lyrics.unshift({words: "(lyrics will appear here, get ready...)", time: 0});
+    if(lyrics[0].start !== 0) {
+      lyrics.unshift({line: "(lyrics will appear here, get ready...)", start: 0, end: lyrics[0].start});
     }
-    lyrics.push({words: "....", start: lyrics[lyrics.length-1], time: lyrics[lyrics.length-1].time + 10})
+    lyrics.push({line: "....", start: lyrics[lyrics.length-1].end, end: 10})
   }
+
+  // const startup = () => {
+  //   if(lyrics[0].time !== 0) {
+  //     lyrics.unshift({line: "(lyrics will appear here, get ready...)", start: 0, end: lyrics[0].start});
+  //   }
+  //   lyrics.push({line: "....", start: lyrics[lyrics.length-1].end, end: 10})
+  // }
 
   const renderGrade = React.useCallback(() => {
     switch(true) {
@@ -123,21 +89,21 @@ function Test() {
   }, [acc]);
 
   useEffect(() => {
-    // if(index < lyrics.length - 1) {
-    //   if(lyrics[index].end !== lyrics[index+1].start) {
-    //     lyrics.splice(index + 1, 0, {line: "...", start: lyrics[index].end, end: lyrics[index+1].start})
-    //   }
-    // }
+    if(index < lyrics.length - 1) {
+      if(lyrics[index].end !== lyrics[index+1].start) {
+        lyrics.splice(index + 1, 0, {line: "...", start: lyrics[index].end, end: lyrics[index+1].start})
+      }
+    }
 
     let interval;
     if (playing && index < lyrics.length - 1) {
-      const wait = parseFloat((lyrics[index+1].time - lyrics[index].time)); 
+      const wait = parseFloat((lyrics[index].end - lyrics[index].start)); 
       console.log(index + " :: " + wait);
       interval = setInterval(() => {
         setIndex((prevIndex) => prevIndex + 1);
-      }, wait * 1000);
+      }, wait * 300);
 
-      setDur(wait * 1000);
+      setDur(wait * 300);
     }
 
     return () => {
@@ -171,9 +137,9 @@ function Test() {
           (<div>
             <ReactAudioPlayer src={aud} autoPlay={true} controls={false} volume='.1'/>
             {/* <ReactPlayer url={vid} playing={playing} volume='0' className="react-player" width="100%"/> */}
-              {index > 0 ? <div className='ghost'>{lyrics[index-1].words}</div> : null}
-              <div className='lyrics'>{lyrics[index].words}</div>
-              {index < lyrics.length-1 ? <div className='ghost'>{lyrics[index+1].words}</div> : null}
+              {index > 0 ? <div className='ghost'>{lyrics[index-1].line}</div> : null}
+              <div className='lyrics'>{lyrics[index].line}</div>
+              {index < lyrics.length-1 ? <div className='ghost'>{lyrics[index+1].line}</div> : null}
             <ProgressBar duration={dur}/>
             <button onClick={cancelPlay} className='button2'>stop</button>
           </div>
@@ -188,4 +154,4 @@ function Test() {
     );
   }
   
-  export default Test;
+  export default Test2;
