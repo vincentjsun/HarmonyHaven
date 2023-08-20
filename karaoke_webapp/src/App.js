@@ -8,13 +8,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 let stop = false;
-// import FilePitch from './FilePitch';
-// import SpeechToTextComponent from './SpeechToText';
+let notes = [];
 
 function App() {
   const [shouldUpdate, setShouldUpdate] = useState(1);
   const [detectedNotes, setDetectedNotes] = useState([]);
-  //const [stop, setStop] = useState(false);
   var previousValueToDisplay = 0;
   var smoothingCount = 0;
   var smoothingThreshold = 20;
@@ -47,6 +45,7 @@ function App() {
     if (shouldUpdate === 1 && !stop) {
       console.log(stop);
       setDetectedNotes(prevNotes => [...prevNotes, newDetectedNote]);
+      notes.push(newDetectedNote);
     }
   };
 
@@ -149,30 +148,14 @@ function App() {
     console.log(detectedNotes);
   };
 
-  // const frequencyToNote = frequency => {
-  //   const noteNum = 12 * (Math.log(frequency / 440) / Math.log(2));
-  //   return Math.round(noteNum) + 69;
-  // };
-
   return (
     <div className="App">
       <header className="App-header">
+        <ResultScreen user={notes} orig={callMeMaybe} perc={perc}/>
         <button id="startButton" onClick={startAudio}>Start Audio</button>
         <button id="stopButton" onClick={stopUpdate}>Stop Audio</button>
 
         <canvas id="visualizer" width="400" height="200"></canvas>
-
-        {/* {{shouldUpdate === 1 && (
-          <ul id="detectedNotes">
-            {detectedNotes.map((note, index) => (
-              <li key={index}>{note}</li>
-            ))}
-          </ul>
-        )} */}
-
-        {shouldUpdate === 0 && (
-          <ResultScreen user={detectedNotes} orig={callMeMaybe} perc={perc}/>
-        )}
       </header>
       <Pitch visualize={visualize} />
       {/* <SpeechToTextComponent></SpeechToTextComponent> */}
