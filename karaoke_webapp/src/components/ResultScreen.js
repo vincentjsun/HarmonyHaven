@@ -110,7 +110,7 @@ const ResultScreen = ({ user, orig, perc }) => {
   }
 
   return (
-    <div>
+    <div className='resultss'>
       <h2>Combo: {combo} </h2>
       <h2>Score: {score} </h2>
       <h2>Percent: {isNaN(percent) ? "0%" : percent.toString().substring(0,5) + "%"} </h2>
