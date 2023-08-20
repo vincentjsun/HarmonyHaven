@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import Pitch from './Pitch';
+import Pitch from './pages/Pitch';
 
 function App() {
   const [shouldUpdate, setShouldUpdate] = useState(true);
