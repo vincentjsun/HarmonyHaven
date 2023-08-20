@@ -110,6 +110,7 @@
   margin-top: 15px;
   width: 250px;
   height: 30px;
+  padding-left: 10px;
 }
 
 .searchbutton {
@@ -217,7 +218,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   align-self: center;
-  width: 80%;
+  width: 500px;
 }
 
 .return {
@@ -241,6 +242,10 @@
 .lyrics {
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.ghost {
+  color: rgba(255, 255, 255, 0.366);
 }
 
 .log {
@@ -275,6 +280,7 @@
 }
 
 .progress-bar-container {
+  margin-top: 10px;
   width: 100%;
   height: 20px;
   background-color: #ccc;

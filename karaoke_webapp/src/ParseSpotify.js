@@ -1,24 +1,25 @@
-import data from './assets/lyrics2.txt';
+// import data from './assets/lyrics2.txt';
 
-let file;
+// // let file;
 
-const fetchFile = async () => {
-    try {
-      const response = await fetch(data);
-      file = await response.text();
-    } catch (error) {
-      console.error('error ', error);
-    }
-  };
+// // const fetchFile = async () => {
+// //     try {
+// //       const response = await fetch(data);
+// //       file = await response.text();
+// //     } catch (error) {
+// //       console.error('error ', error);
+// //     }
+// //   };
 
-fetchFile();
+// // fetchFile();
 
-console.log(file);
+// // console.log(file);
 
-const lyrics2 = file.lines.map(line => ({
-    time: line.timeTag.split(':')[0],
-    words: line.words
-  }));
+
+// const lyrics2 = file.lines.map(line => ({
+//     time: line.timeTag.split(':')[0],
+//     words: line.words
+//   }));
   
-export { lyrics2 }
+// export { lyrics2 }
 

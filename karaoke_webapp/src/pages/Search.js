@@ -10,7 +10,7 @@ function Test() {
   const [updated, setUpdated] = useState("");
   const [song, setSong] = useState("");
   const [videos, setVideos] = useState([]);
-  const API_KEY = "AIzaSyBy9z6_-AtOT4so3trQJsxHVlmp7c-BJRE";
+  const API_KEY = "AIzaSyDZZEvQBRJuIUefu-LC9fQ-jbO7yyKaZW8";
   const navigate = useNavigate();
 
   const search = async () => {
