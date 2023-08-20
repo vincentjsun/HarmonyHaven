@@ -1,4 +1,4 @@
-import './App.css';
+import './pages/App.css';
 import React, { useState } from 'react';
 import { callMeMaybe, perc } from './components/SongPitches'; 
 import Graph from './components/Graph';

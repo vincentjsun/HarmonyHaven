@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './pages/App';
+import App from './App';
 import Test from './pages/Search';
 import Test2 from './pages/Song';
 import Router from './pages/Router';
