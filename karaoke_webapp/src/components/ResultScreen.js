@@ -54,7 +54,6 @@ const ResultScreen = ({ user, orig, perc }) => {
  let count = 0;
  let tick = 0;
   const matchingIndexes = notes.filter((item, index) => {
-    console.log(index);
     for (let i = -2; i <= 2; i++) {
       if (index + i >= 0 && index + i < orig.length) {
         const diff = Math.abs(item - orig[index + i]);

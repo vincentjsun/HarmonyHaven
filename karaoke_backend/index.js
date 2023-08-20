@@ -51,5 +51,3 @@ app.listen(PORT, (error) =>{
         console.log("Error occurred, server can't start", error);
     }
 );
-
-//mongodb+srv://vincentjsun:<password>@karaokedb.hptn0cd.mongodb.net/?retryWrites=true&w=majority
