@@ -10,7 +10,7 @@ import s_rank from '../assets/s_rank.png';
 // import { lyrics } from './assets/TestLyrics';
 import ReactAudioPlayer from 'react-audio-player';
 import { useNavigate } from 'react-router-dom';
-import { cancelA, image, startA, title } from '../Title';
+import { cancelA, image, setNotes, startA, title } from '../Title';
 import { getLyrics } from '../ParseLyrics';
 import data from '../assets/lyrics.vtt';
 import data2 from '../assets/lyrics2.txt';
@@ -307,6 +307,7 @@ function Song() {
     setShouldUpdate(0);
     stop = true;
     //setStop(true);
+    setNotes(detectedNotes);
   }
   console.log(detectedNotes);
 

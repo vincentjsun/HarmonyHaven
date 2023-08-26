@@ -29,7 +29,7 @@ const ResultScreen = ({ user, orig, perc }) => {
     return averagedArray;
   }
   
-  const chunkSize = 1;
+  const chunkSize = 3;
   
   list = removeLeadingMinusOnes(list);
   var notes = calculateAverages(list, chunkSize);
@@ -60,7 +60,7 @@ const ResultScreen = ({ user, orig, perc }) => {
         const doubleNote = item * 2, quadNote = item * 4;  
         const doubleOrig = orig[index + i] * 2, quadOrig = orig[index + i] * 4;
         // console.log(item + " : " + orig[index + i] + " ??? " + Math.abs(doubleNote - orig[index + i]) + " ?? " + Math.abs(doubleOrig - item))
-        if (diff <= 15 || Math.abs(doubleNote - orig[index + i]) <= 15 || Math.abs(doubleOrig - item) <= 15 || Math.abs(quadNote - orig[index + i]) <= 15 || Math.abs(quadOrig - item) <= 15) {
+        if (diff <= 30 || Math.abs(doubleNote - orig[index + i]) <= 30 || Math.abs(doubleOrig - item) <= 30 || Math.abs(quadNote - orig[index + i]) <= 20 || Math.abs(quadOrig - item) <= 30) {
           count++;
           combo++;
           if (count > index_count) {

@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css';
-import Pitch from '../components/Pitch';
 import screenshot from '../assets/screenshot.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -12,9 +11,8 @@ function Home() {
 
   return (
     <div className='apphome'>
-      <h1 className='tagline'>website tagline</h1>
+      <h1 className='tagline'>Unleash your inner star.</h1>
       <h3 className='text'>Get started now or learn more:</h3>
-      <Pitch />
       <button className='navbutton' onClick={checkout}>Try Karaoke</button>
       <h3 className='text3'>Preview:</h3>
       <img className='screen' src={screenshot}/>

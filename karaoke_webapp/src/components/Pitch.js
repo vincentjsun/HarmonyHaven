@@ -180,10 +180,10 @@ function Pitch() {
     const originalsnippet = original.slice(snipindex, Math.min(snipindex+70, original.length));
     const origlen = original.slice(Math.min(snipindex, original.length-70), Math.min(snipindex+70, original.length))
     const data = {
-      labels: origlen,
+      labels: original,
       datasets: [{
         label:'Original Pitch',
-        data: originalsnippet,
+        data: original,
         backgroundColor: 'black',
         borderColor: 'black',
         pointBorderColor: 'black',
@@ -192,7 +192,7 @@ function Pitch() {
       },
       {
         label:'Your Pitch',
-        data: coversnippet,
+        data: cover,
         backgroundColor: 'red',
         borderColor: 'red',
         pointBorderColor: 'red',
@@ -231,7 +231,7 @@ function Pitch() {
         <div style={
         {
           width: '600px',
-          height: '300px'
+          height: '400px'
         }
       }>
         <Line className='graph'

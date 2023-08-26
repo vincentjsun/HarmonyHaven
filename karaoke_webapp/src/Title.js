@@ -37,4 +37,11 @@ const cancelA = () => {
     cancel += 1;
 }
 
-export {title, image, access, id, start, cancel, setTitle, setImage, setAccess, removeAccess, setId, startA, cancelA};
+let notes = [];
+
+const setNotes = (stuff) => {
+    notes = stuff;
+    console.log("AAAAAAAAAA" + notes);
+}
+
+export {title, image, access, id, start, cancel, notes, setTitle, setImage, setAccess, removeAccess, setId, startA, cancelA, setNotes};

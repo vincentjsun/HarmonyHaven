@@ -4,6 +4,7 @@ import Song from './Song';
 import Home from './Home';
 import Login from './Login';
 import Test from './Test';
+import Replays from './Replays';
 import { NavBar } from './NavBar';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import About from './About';
@@ -22,6 +23,7 @@ function Routing() {
           <Route path="/about" exact element={<About/>}/>
           <Route path="/" exact element={<Login/>}/>
           <Route path="/signup" exact element={<Signup/>}/>
+          <Route path="/replays" exact element={<Replays/>}/>
           <Route path="/test" exact element={<Test/>}/>
         </Routes>
       </Router>
