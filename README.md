@@ -1,4 +1,4 @@
-# KaraokeApp
+# Harmony Haven
 The exciting karaoke experience to elevate your singing and unleash your inner star.
 ## Inspiration
 
